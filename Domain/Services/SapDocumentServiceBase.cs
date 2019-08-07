@@ -1,4 +1,5 @@
 ﻿using GRINTSYS.SAPRestApi.BussinessLogic.Inputs;
+using GRINTSYS.SAPRestApi.Domain.Output;
 using GRINTSYS.SAPRestApi.Domain.Services;
 using GRINTSYS.SAPRestApi.Inputs;
 using SAPbobsCOM;
@@ -43,7 +44,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
             return _company;
         }
 
-        public virtual Task Execute(ISapDocumentInput input)
+        public virtual Task<TaskResponse> Execute(ISapDocumentInput input)
         {
             throw new NotImplementedException();
         }

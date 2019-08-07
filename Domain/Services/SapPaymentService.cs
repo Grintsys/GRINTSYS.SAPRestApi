@@ -1,8 +1,10 @@
 ﻿using GRINTSYS.SAPRestApi.BussinessLogic.Inputs;
+using GRINTSYS.SAPRestApi.Domain.Output;
 using System.Threading.Tasks;
 
 namespace GRINTSYS.SAPRestApi.Domain.Services
 {
+    /*
     public class SapPayment: SapDocumentServiceBase
     {
         //private readonly PaymentManager _paymentManager;
@@ -11,8 +13,9 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
         {
         }
 
-        public override async Task Execute(ISapDocumentInput input)
+        public override async Task<TaskResponse> Execute(ISapDocumentInput input)
         {
+            return;
             /*
             var payment = _paymentManager.GetPayment(input.Id);
             var invoice = _paymentManager.GetInvoice(payment.InvoiceId);
@@ -86,7 +89,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
             }
 
             company.Disconnect();
-            */
+            
         }
-    }
+    }*/
 }

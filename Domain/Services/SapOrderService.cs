@@ -1,4 +1,5 @@
 ﻿using GRINTSYS.SAPRestApi.BussinessLogic.Inputs;
+using GRINTSYS.SAPRestApi.Domain.Output;
 using GRINTSYS.SAPRestApi.Domain.Services;
 using GRINTSYS.SAPRestApi.Inputs;
 using SAPbobsCOM;
@@ -9,17 +10,16 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
 {
     public class SapOrder: SapDocumentServiceBase, ISapDocumentService
     {
-        private IProductService _productService;
-        public SapOrder(IProductService productService)
+        private IOrderService _orderService;
+        public SapOrder(IOrderService orderService)
         {
-            _productService = productService;
+            _orderService = orderService;
         }
 
-        public override async Task Execute(ISapDocumentInput input)
+        public override async Task<TaskResponse> Execute(ISapDocumentInput input)
         {
-            /*
             String message = "";
-            var order = (SAPOrderInput)input;
+            var order = await _orderService.GetAsync(((SAPOrderInput)input).Id);
 
             Company company = this.Connect(new SapSettingsInput());
 
@@ -27,7 +27,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
             salesOrder.CardCode = order.CardCode;
             salesOrder.Comments = order.Comment;
             salesOrder.Series = order.Series;
-            salesOrder.SalesPersonCode = order.User.SalesPersonId;
+            salesOrder.SalesPersonCode = order.AbpUser.SalesPersonId;
             salesOrder.DocDueDate = order.CreationTime;      
 
             foreach (var item in order.OrderItems)
@@ -46,7 +46,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
             if (salesOrder.Add() == 0)
             {
                 message = String.Format("Successfully added Sales Order DocEntry: {0}", company.GetNewObjectKey());
-                Logger.Info(message);             
+                //Logger.Info(message);             
             }
             else
             {
@@ -54,14 +54,15 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                         + company.GetLastErrorCode().ToString()
                         + " - "
                         + company.GetLastErrorDescription();
-                Logger.Error(message);
+                //Logger.Error(message);
             }
 
-            order.LastMessage = message;
-            _orderManager.UpdateOrder(order);
+            //order.LastMessage = message;
+            //_orderManager.UpdateOrder(order);
 
             company.Disconnect();
-            */
+
+            return new TaskResponse() { Message = message };
         }
     }
 }

@@ -17,7 +17,15 @@ namespace GRINTSYS.SAPRestApi
             var container = new UnityContainer();
             container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IProductService, ProductService>();
+            container.RegisterType<IOrderRepository, OrderRepository>();
+            container.RegisterType<IOrderService, OrderService>();
+            container.RegisterType<IPaymentRepository, PaymentRepository>();
+            container.RegisterType<IPaymentService, PaymentService>();
             config.DependencyResolver = new UnityResolver(container);
+
+            var json = config.Formatters.JsonFormatter;
+            json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
 
             // Rutas de API web
             config.MapHttpAttributeRoutes();
