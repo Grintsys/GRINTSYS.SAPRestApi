@@ -8,11 +8,12 @@ using System.Web.Http;
 
 namespace GRINTSYS.SAPRestApi.Controllers
 {
-    public class OrdersController : ApiController
+    public class PaymentsController : ApiController
     {
         private readonly ISapDocumentService _sapDocumentService;
 
-        public OrdersController(SapOrder sapDocumentService)
+
+        public PaymentsController(SapPayment sapDocumentService)
         {
             _sapDocumentService = sapDocumentService;
         }

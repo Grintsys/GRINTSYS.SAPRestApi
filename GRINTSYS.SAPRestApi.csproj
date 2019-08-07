@@ -171,11 +171,15 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Domain\Inputs\ISapDocumentInput.cs" />
+    <Compile Include="Domain\Inputs\SAPPaymentInput.cs" />
     <Compile Include="Domain\Inputs\SapSettingsInput.cs" />
     <Compile Include="Domain\Inputs\SAPOrderInput.cs" />
     <Compile Include="Domain\Output\TaskResponse.cs" />
+    <Compile Include="Domain\Services\IInvoiceService.cs" />
+    <Compile Include="Domain\Services\InvoiceService.cs" />
     <Compile Include="Domain\Services\IOrderService.cs" />
     <Compile Include="Domain\Services\IPaymentService.cs" />
     <Compile Include="Domain\Services\ISapDocumentService.cs" />
@@ -185,15 +189,15 @@
     <Compile Include="Domain\Services\SapOrderService.cs" />
     <Compile Include="Domain\Services\SapPaymentService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Domain\Services\IProductService.cs" />
     <Compile Include="Domain\Services\ProductService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AbpTenant.cs" />
     <Compile Include="Models\AbpUser.cs" />
     <Compile Include="Models\Bank.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\Helper.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderItem.cs" />
@@ -202,6 +206,8 @@
     <Compile Include="Models\ProductVariant.cs" />
     <Compile Include="Models\SAPRestApiContext.cs" />
     <Compile Include="Models\UnityResolver.cs" />
+    <Compile Include="Persistence\Repositories\IInvoiceRepository.cs" />
+    <Compile Include="Persistence\Repositories\InvoiceRepository.cs" />
     <Compile Include="Persistence\Repositories\IOrderRepository.cs" />
     <Compile Include="Persistence\Repositories\IPaymentRepository.cs" />
     <Compile Include="Persistence\Repositories\IProductRepository.cs" />

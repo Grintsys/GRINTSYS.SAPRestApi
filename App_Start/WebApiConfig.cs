@@ -21,6 +21,11 @@ namespace GRINTSYS.SAPRestApi
             container.RegisterType<IOrderService, OrderService>();
             container.RegisterType<IPaymentRepository, PaymentRepository>();
             container.RegisterType<IPaymentService, PaymentService>();
+            container.RegisterType<IInvoiceRepository, InvoiceRepository>();
+            container.RegisterType<IInvoiceService, InvoiceService>();
+            //container.RegisterType<ISapDocumentService, SapOrder>();
+            container.RegisterType<ISapDocumentService, SapPayment>();
+
             config.DependencyResolver = new UnityResolver(container);
 
             var json = config.Formatters.JsonFormatter;

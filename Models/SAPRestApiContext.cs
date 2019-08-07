@@ -12,9 +12,9 @@ namespace GRINTSYS.SAPRestApi.Models
         {
         }
 
-        public virtual DbSet<AbpTenant> AbpTenants { get; set; }
         public virtual DbSet<AbpUser> AbpUsers { get; set; }
         public virtual DbSet<Bank> Banks { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<OrderItem> OrderItems { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
@@ -24,21 +24,6 @@ namespace GRINTSYS.SAPRestApi.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AbpUser>()
-                .HasMany(e => e.AbpTenants)
-                .WithOptional(e => e.AbpUser)
-                .HasForeignKey(e => e.CreatorUserId);
-
-            modelBuilder.Entity<AbpUser>()
-                .HasMany(e => e.AbpTenants1)
-                .WithOptional(e => e.AbpUser1)
-                .HasForeignKey(e => e.DeleterUserId);
-
-            modelBuilder.Entity<AbpUser>()
-                .HasMany(e => e.AbpTenants2)
-                .WithOptional(e => e.AbpUser2)
-                .HasForeignKey(e => e.LastModifierUserId);
-
             modelBuilder.Entity<AbpUser>()
                 .HasMany(e => e.AbpUsers1)
                 .WithOptional(e => e.AbpUser1)
