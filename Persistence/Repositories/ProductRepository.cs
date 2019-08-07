@@ -17,7 +17,7 @@ namespace GRINTSYS.SAPRestApi.Persistence.Repositories
 
         public async Task<Product> GetAsync(int id)
         {
-            return await _context.Products.Include("ProductVariant")
+            return await _context.Products.Include("ProductVariants")
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
     }

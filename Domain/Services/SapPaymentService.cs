@@ -1,26 +1,19 @@
-﻿using Abp.Application.Services;
-using Abp.UI;
-using GRINTSYS.SAPMiddleware.M2;
-using GRINTSYS.SAPMiddleware.M2.Payments;
-using SAPbobsCOM;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GRINTSYS.SAPRestApi.BussinessLogic.Inputs;
 using System.Threading.Tasks;
 
-namespace GRINTSYS.SAPRestApi.BussinessLogic
+namespace GRINTSYS.SAPRestApi.Domain.Services
 {
-    public class SapPayment: SapDocument
+    public class SapPayment: SapDocumentServiceBase
     {
-        private readonly PaymentManager _paymentManager;
+        //private readonly PaymentManager _paymentManager;
 
-        public SapPayment(PaymentManager paymentManager)
+        public SapPayment()
         {
-            _paymentManager = paymentManager;
         }
 
-        public override void Execute(SapDocumentInput input)
+        public override async Task Execute(ISapDocumentInput input)
         {
+            /*
             var payment = _paymentManager.GetPayment(input.Id);
             var invoice = _paymentManager.GetInvoice(payment.InvoiceId);
 
@@ -93,6 +86,7 @@ namespace GRINTSYS.SAPRestApi.BussinessLogic
             }
 
             company.Disconnect();
+            */
         }
     }
 }

@@ -23,12 +23,9 @@ namespace GRINTSYS.SAPRestApi.Controllers
         [HttpGet]
         public async Task<Product> Get(int id)
         {
-            return await _productService.GetAsync(id);
-        }
+            var product = await _productService.GetAsync(id);
 
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
+            return product;
         }
     }
 }

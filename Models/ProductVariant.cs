@@ -39,7 +39,5 @@ namespace GRINTSYS.SAPRestApi.Models
         public DateTime CreationTime { get; set; }
 
         public virtual Product Product { get; set; }
-
-        public virtual Size Size { get; set; }
     }
 }

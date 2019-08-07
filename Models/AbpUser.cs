@@ -11,10 +11,14 @@ namespace GRINTSYS.SAPRestApi.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AbpUser()
         {
+            AbpTenants = new HashSet<AbpTenant>();
+            AbpTenants1 = new HashSet<AbpTenant>();
+            AbpTenants2 = new HashSet<AbpTenant>();
             AbpUsers1 = new HashSet<AbpUser>();
             AbpUsers11 = new HashSet<AbpUser>();
             AbpUsers12 = new HashSet<AbpUser>();
             Orders = new HashSet<Order>();
+            Payments = new HashSet<Payment>();
         }
 
         public long Id { get; set; }
@@ -106,6 +110,15 @@ namespace GRINTSYS.SAPRestApi.Models
         public int SalesPersonId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AbpTenant> AbpTenants { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AbpTenant> AbpTenants1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AbpTenant> AbpTenants2 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AbpUser> AbpUsers1 { get; set; }
 
         public virtual AbpUser AbpUser1 { get; set; }
@@ -122,5 +135,8 @@ namespace GRINTSYS.SAPRestApi.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

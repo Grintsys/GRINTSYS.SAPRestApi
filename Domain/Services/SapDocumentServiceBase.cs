@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
-using System.Threading.Tasks;
-using Abp.UI;
-using GRINTSYS.SAPRestApi.BussinessLogic.Inputs;
+﻿using GRINTSYS.SAPRestApi.BussinessLogic.Inputs;
+using GRINTSYS.SAPRestApi.Domain.Services;
 using GRINTSYS.SAPRestApi.Inputs;
 using SAPbobsCOM;
+using System;
+using System.Configuration;
+using System.Threading.Tasks;
 
-namespace GRINTSYS.SAPRestApi.BussinessLogic
+namespace GRINTSYS.SAPRestApi.Domain.Services
 {
-    public class SapDocument: ISapDocument
+    public class SapDocumentServiceBase: ISapDocumentService
     {
         private Company _company;
-        public SapDocument()
+        public SapDocumentServiceBase()
         {
             _company = new Company();
         }

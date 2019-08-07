@@ -1,4 +1,5 @@
-﻿using GRINTSYS.SAPRestApi.Models;
+﻿using GRINTSYS.SAPRestApi.Domain.Services;
+using GRINTSYS.SAPRestApi.Models;
 using GRINTSYS.SAPRestApi.Persistence.Repositories;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace GRINTSYS.SAPRestApi
             // Configuración y servicios de API web
             var container = new UnityContainer();
             container.RegisterType<IProductRepository, ProductRepository>();
+            container.RegisterType<IProductService, ProductService>();
             config.DependencyResolver = new UnityResolver(container);
 
             // Rutas de API web

@@ -1,20 +1,23 @@
-﻿using Abp.Application.Services;
-using GRINTSYS.SAPMiddleware.M2.Orders;
-using GRINTSYS.SAPRestApi.BussinessLogic.Inputs;
+﻿using GRINTSYS.SAPRestApi.BussinessLogic.Inputs;
+using GRINTSYS.SAPRestApi.Domain.Services;
 using GRINTSYS.SAPRestApi.Inputs;
 using SAPbobsCOM;
 using System;
+using System.Threading.Tasks;
 
-namespace GRINTSYS.SAPRestApi.BussinessLogic
+namespace GRINTSYS.SAPRestApi.Domain.Services
 {
-    public class SapOrder: SapDocument, ISapDocument
+    public class SapOrder: SapDocumentServiceBase, ISapDocumentService
     {
-        public SapOrder()
+        private IProductService _productService;
+        public SapOrder(IProductService productService)
         {
+            _productService = productService;
         }
 
-        public override void Execute(ISapDocumentInput input)
+        public override async Task Execute(ISapDocumentInput input)
         {
+            /*
             String message = "";
             var order = (SAPOrderInput)input;
 
@@ -58,6 +61,7 @@ namespace GRINTSYS.SAPRestApi.BussinessLogic
             _orderManager.UpdateOrder(order);
 
             company.Disconnect();
+            */
         }
     }
 }

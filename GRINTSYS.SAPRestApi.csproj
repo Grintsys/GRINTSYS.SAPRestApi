@@ -174,24 +174,28 @@
     <Compile Include="Domain\Inputs\ISapDocumentInput.cs" />
     <Compile Include="Domain\Inputs\SapSettingsInput.cs" />
     <Compile Include="Domain\Inputs\SAPOrderInput.cs" />
-    <Compile Include="Domain\ISapDocument.cs" />
-    <Compile Include="Domain\SapDocument.cs" />
-    <Compile Include="Domain\SapOrder.cs" />
-    <Compile Include="Domain\SapPayment.cs" />
+    <Compile Include="Domain\Services\ISapDocumentService.cs" />
+    <Compile Include="Domain\Services\SapDocumentServiceBase.cs" />
+    <Compile Include="Domain\Services\SapOrderService.cs" />
+    <Compile Include="Domain\Services\SapPaymentService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Domain\Services\IProductService.cs" />
     <Compile Include="Domain\Services\ProductService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AbpTenant.cs" />
     <Compile Include="Models\AbpUser.cs" />
-    <Compile Include="Models\SAPRestApiContext.cs" />
+    <Compile Include="Models\Bank.cs" />
+    <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderItem.cs" />
+    <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductVariant.cs" />
-    <Compile Include="Models\Size.cs" />
+    <Compile Include="Models\SAPRestApiContext.cs" />
+    <Compile Include="Models\UnityResolver.cs" />
     <Compile Include="Persistence\Repositories\IProductRepository.cs" />
     <Compile Include="Persistence\Repositories\ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
