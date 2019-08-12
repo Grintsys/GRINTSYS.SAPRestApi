@@ -11,15 +11,16 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  buildPlatform: 'Any CPU'
 
 steps:
 - task: NuGetCommand@2
   inputs:
     command: 'restore'
     restoreSolution: '**/*.sln'
-    feedsToUse: 'select'
-
-- task: MSBuild@1
+    feedsToUse: 'select'   
+- task: VSBuild@1
   inputs:
-    solution: '**/*.sln'
-    msbuildArchitecture: 'x64'
+    solution: '**\*.sln'
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
