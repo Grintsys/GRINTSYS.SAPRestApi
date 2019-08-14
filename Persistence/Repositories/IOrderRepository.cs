@@ -11,5 +11,6 @@ namespace GRINTSYS.SAPRestApi.Persistence.Repositories
     public interface IOrderRepository
     {
         Task<Order> GetAsync(int id);
+        Task UpdateAsync(Order order);
     }
 }

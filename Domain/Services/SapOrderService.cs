@@ -10,6 +10,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
 {
     public class SapOrder: SapDocumentServiceBase, ISapDocumentService
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private IOrderService _orderService;
         public SapOrder(IOrderService orderService)
         {
@@ -18,6 +19,8 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
 
         public override async Task<TaskResponse> Execute(ISapDocumentInput input)
         {
+            log.Info("Begin to create a order");
+
             TaskResponse response = new TaskResponse() { Success = true, Message = "" };
             String message = "";
             try
@@ -49,7 +52,8 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                 if (salesOrder.Add() == 0)
                 {
                     message = String.Format("Successfully added Sales Order DocEntry: {0}", company.GetNewObjectKey());
-                    //Logger.Info(message);             
+                    //Logger.Info(message); 
+                    log.Info(message);
                 }
                 else
                 {
@@ -60,17 +64,19 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
 
                     response.Success = false;
                     response.Message = message;
+                    log.Error(message);
                     //Logger.Error(message);
                 }
 
-                //order.LastMessage = message;
-                //_orderManager.UpdateOrder(order);
+                order.LastMessage = message;
+                await _orderService.UpdateAsync(order);
 
                 company.Disconnect();
             }catch(Exception e)
             {
                 response.Success = false;
                 response.Message = e.Message;
+                log.Error(e.Message);
             }
 
             return response;

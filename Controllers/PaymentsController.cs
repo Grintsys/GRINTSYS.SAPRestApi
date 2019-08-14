@@ -19,7 +19,7 @@ namespace GRINTSYS.SAPRestApi.Controllers
         }
 
         // GET api/products/5
-        [HttpGet]
+        [HttpPost]
         public async Task<HttpResponseMessage> Create(int id)
         {
             var result = await _sapDocumentService.Execute(new SAPOrderInput() { Id = id });

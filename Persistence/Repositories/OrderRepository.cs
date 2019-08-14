@@ -20,5 +20,11 @@ namespace GRINTSYS.SAPRestApi.Persistence.Repositories
             return await _context.Orders.Include("OrderItems")
                .FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public Task UpdateAsync(Order order)
+        {
+            _context.Entry<Order>(order);
+            return _context.SaveChangesAsync();
+        }
     }
 }

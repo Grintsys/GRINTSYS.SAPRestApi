@@ -10,5 +10,6 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
     public interface IOrderService
     {
         Task<Order> GetAsync(int id);
+        Task UpdateAsync(Order order);
     }
 }

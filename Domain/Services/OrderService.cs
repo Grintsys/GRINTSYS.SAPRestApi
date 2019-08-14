@@ -20,5 +20,10 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
         {
             return await _orderRepository.GetAsync(id);
         }
+
+        public Task UpdateAsync(Order order)
+        {
+            return _orderRepository.UpdateAsync(order);
+        }
     }
 }
