@@ -33,7 +33,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                 salesOrder.CardCode = order.CardCode;
                 salesOrder.Comments = order.Comment;
                 salesOrder.Series = order.Series;
-                salesOrder.SalesPersonCode = order.AbpUser.SalesPersonId;
+                salesOrder.SalesPersonCode = 1;//order.AbpUser.SalesPersonId;
                 salesOrder.DocDueDate = order.CreationTime;
 
                 foreach (var item in order.OrderItems)

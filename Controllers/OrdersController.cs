@@ -77,7 +77,7 @@ namespace GRINTSYS.SAPRestApi.Controllers
             });
             */
 
-            log.Info("[POST] api/orders/1");
+            log.Info("[GET] api/orders/1");
             var result = await _sapDocumentService.Execute(new SAPOrderInput() { Id = id });
 
             return Ok(result);
