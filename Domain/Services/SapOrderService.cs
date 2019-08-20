@@ -20,9 +20,11 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private IOrderService _orderService;
-        public SapOrder(IOrderService orderService)
+        private IClientService _clientService;
+        public SapOrder(IOrderService orderService, IClientService clientService)
         {
             _orderService = orderService;
+            _clientService = clientService;
         }
 
         public override async Task<TaskResponse> Execute(ISapDocumentInput input)
@@ -41,8 +43,11 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                 salesOrder.CardCode = order.CardCode;
                 salesOrder.Comments = order.Comment;
                 salesOrder.Series = order.Series;
-                salesOrder.SalesPersonCode = 1;//order.AbpUser.SalesPersonId;
+                salesOrder.SalesPersonCode = order.AbpUser.SalesPersonId;
                 salesOrder.DocDueDate = order.CreationTime;
+
+                //fix for M2 dimension
+                var client = await _clientService.GetByCardCodeAsync(order.CardCode);
 
                 foreach (var item in order.OrderItems)
                 {
@@ -52,8 +57,10 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                     salesOrder.Lines.DiscountPercent = item.DiscountPercent;
                     salesOrder.Lines.WarehouseCode = item.WarehouseCode;
                     //Add Comercial Canal, Tradicion Center Cost. DEM. July 8th. 2018. 
-                    salesOrder.Lines.CostingCode = "301";
+                    //Fixed by tenant
+                    salesOrder.Lines.CostingCode = "303";
                     salesOrder.Lines.CostingCode2 = "3001-01";
+                    salesOrder.Lines.CostingCode3 = client.Dimension;
                     salesOrder.Lines.Add();
                 }
                 // add Sales Order

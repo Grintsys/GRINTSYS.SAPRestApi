@@ -185,9 +185,11 @@
     <Compile Include="Domain\Services\IInvoiceService.cs" />
     <Compile Include="Domain\Services\Input\OrderInput.cs" />
     <Compile Include="Domain\Services\InvoiceService.cs" />
+    <Compile Include="Domain\Services\IClientService.cs" />
     <Compile Include="Domain\Services\IOrderService.cs" />
     <Compile Include="Domain\Services\IPaymentService.cs" />
     <Compile Include="Domain\Services\ISapDocumentService.cs" />
+    <Compile Include="Domain\Services\ClientService.cs" />
     <Compile Include="Domain\Services\OrderService.cs" />
     <Compile Include="Domain\Services\PaymentService.cs" />
     <Compile Include="Domain\Services\SapDocumentServiceBase.cs" />
@@ -219,11 +221,13 @@
     <Compile Include="Models\ProductVariant.cs" />
     <Compile Include="Models\SAPRestApiContext.cs" />
     <Compile Include="Models\UnityResolver.cs" />
+    <Compile Include="Persistence\Repositories\IClientRepository.cs" />
     <Compile Include="Persistence\Repositories\IInvoiceRepository.cs" />
     <Compile Include="Persistence\Repositories\InvoiceRepository.cs" />
     <Compile Include="Persistence\Repositories\IOrderRepository.cs" />
     <Compile Include="Persistence\Repositories\IPaymentRepository.cs" />
     <Compile Include="Persistence\Repositories\IProductRepository.cs" />
+    <Compile Include="Persistence\Repositories\ClientRepository.cs" />
     <Compile Include="Persistence\Repositories\OrderRepository.cs" />
     <Compile Include="Persistence\Repositories\PaymentRepository.cs" />
     <Compile Include="Persistence\Repositories\ProductRepository.cs" />

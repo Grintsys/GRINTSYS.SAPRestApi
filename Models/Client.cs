@@ -20,6 +20,8 @@ namespace GRINTSYS.SAPRestApi.Models
 
         public string Name { get; set; }
 
+        public string Dimension { get; set; }
+
         public string CardCode { get; set; }
 
         public string PhoneNumber { get; set; }
