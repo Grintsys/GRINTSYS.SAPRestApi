@@ -199,14 +199,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AbpTenant.cs" />
     <Compile Include="Models\AbpUser.cs" />
     <Compile Include="Models\Bank.cs" />
+    <Compile Include="Models\Banner.cs" />
+    <Compile Include="Models\Brand.cs" />
+    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\CartProductItem.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Client.cs" />
-    <Compile Include="Models\Helper.cs" />
+    <Compile Include="Models\ClientDiscount.cs" />
+    <Compile Include="Models\ClientTransaction.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\PaymentInvoiceItem.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductVariant.cs" />
     <Compile Include="Models\SAPRestApiContext.cs" />

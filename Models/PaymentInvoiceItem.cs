@@ -6,29 +6,28 @@ namespace GRINTSYS.SAPRestApi.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Invoice
+    [Table("PaymentInvoiceItem")]
+    public partial class PaymentInvoiceItem
     {
         public int Id { get; set; }
 
         public int TenantId { get; set; }
 
-        public int DocEntry { get; set; }
+        public int PaymentId { get; set; }
 
-        public string DueDate { get; set; }
+        public string DocumentCode { get; set; }
 
         public double TotalAmount { get; set; }
+
+        public double BalanceDue { get; set; }
+
+        public double PayedAmount { get; set; }
 
         [Column(TypeName = "datetime2")]
         public DateTime CreationTime { get; set; }
 
-        public double BalanceDue { get; set; }
+        public int DocEntry { get; set; }
 
-        public int ClientId { get; set; }
-
-        public string DocumentCode { get; set; }
-
-        public double OverdueDays { get; set; }
-
-        public virtual Client Client { get; set; }
+        public virtual Payment Payment { get; set; }
     }
 }

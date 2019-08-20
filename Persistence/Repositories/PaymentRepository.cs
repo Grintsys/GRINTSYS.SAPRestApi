@@ -20,7 +20,7 @@ namespace GRINTSYS.SAPRestApi.Persistence.Repositories
         {
             return await _context.Payments.Include("AbpUser")
                 .Include("Bank")
-                .Include("Invoice")
+                .Include("PaymentInvoiceItem")
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
     }

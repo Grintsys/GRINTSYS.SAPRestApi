@@ -8,6 +8,14 @@ using System.Threading.Tasks;
 
 namespace GRINTSYS.SAPRestApi.Domain.Services
 {
+    public enum OrderStatus
+    {
+        CreadoEnAplicacion = 0,
+        PreliminarEnSAP = 1,
+        Autorizado = 2,
+        ErrorAlCrearEnSAP = 3
+    }
+
     public class SapOrder: SapDocumentServiceBase, ISapDocumentService
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -65,10 +73,10 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                     response.Success = false;
                     response.Message = message;
                     log.Error(message);
-                    //Logger.Error(message);
                 }
 
                 order.LastMessage = message;
+                order.Status = (int)OrderStatus.PreliminarEnSAP;
                 await _orderService.UpdateAsync(order);
 
                 company.Disconnect();

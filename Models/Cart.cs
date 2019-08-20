@@ -6,10 +6,10 @@ namespace GRINTSYS.SAPRestApi.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class ProductVariant
+    public partial class Cart
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProductVariant()
+        public Cart()
         {
             CartProductItems = new HashSet<CartProductItem>();
         }
@@ -18,35 +18,18 @@ namespace GRINTSYS.SAPRestApi.Models
 
         public int TenantId { get; set; }
 
-        public int ItemGroup { get; set; }
-
-        public int ProductId { get; set; }
-
-        public int ColorId { get; set; }
-
-        public int SizeId { get; set; }
-
-        [Required]
-        public string Code { get; set; }
-
-        public int Quantity { get; set; }
-
-        public int IsCommitted { get; set; }
-
-        public double Price { get; set; }
+        public long UserId { get; set; }
 
         public string Currency { get; set; }
 
-        public string WareHouseCode { get; set; }
-
-        public string ImageUrl { get; set; }
+        public int Type { get; set; }
 
         [Column(TypeName = "datetime2")]
         public DateTime CreationTime { get; set; }
 
+        public virtual AbpUser AbpUser { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartProductItem> CartProductItems { get; set; }
-
-        public virtual Product Product { get; set; }
     }
 }
