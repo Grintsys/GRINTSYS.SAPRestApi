@@ -48,6 +48,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
 
                 //fix for M2 dimension
                 var client = await _clientService.GetByCardCodeAsync(order.CardCode);
+                string dinension = client == null ? "" : client.Dimension; 
 
                 foreach (var item in order.OrderItems)
                 {
@@ -56,11 +57,10 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                     salesOrder.Lines.TaxCode = item.TaxCode;
                     salesOrder.Lines.DiscountPercent = item.DiscountPercent;
                     salesOrder.Lines.WarehouseCode = item.WarehouseCode;
-                    //Add Comercial Canal, Tradicion Center Cost. DEM. July 8th. 2018. 
                     //Fixed by tenant
                     salesOrder.Lines.CostingCode = "303";
                     salesOrder.Lines.CostingCode2 = "3001-01";
-                    salesOrder.Lines.CostingCode3 = client.Dimension;
+                    salesOrder.Lines.CostingCode3 = dinension;
                     salesOrder.Lines.Add();
                 }
                 // add Sales Order
