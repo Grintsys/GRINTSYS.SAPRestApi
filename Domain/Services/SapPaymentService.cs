@@ -21,14 +21,14 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
     {
         Efectivo = 1,
         Cheque = 2,
-        Transferencia = 3
+        Transferencia = 0
     }
 
     public class SapPayment: SapDocumentServiceBase
     {
         private readonly IPaymentService _paymentService;
 
-        public SapPayment(IPaymentService paymentService)
+        public SapPayment(IPaymentService paymentService):base()
         {
             _paymentService = paymentService;
         }
