@@ -1,20 +1,24 @@
-﻿using GRINTSYS.SAPRestApi.Domain.Services;
-using GRINTSYS.SAPRestApi.Models;
-using GRINTSYS.SAPRestApi.Persistence.Repositories;
-using System.Web.Http;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Owin;
+using Owin;
+using Hangfire;
 using Unity;
+using GRINTSYS.SAPRestApi.Persistence.Repositories;
+using GRINTSYS.SAPRestApi.Domain.Services;
+using GRINTSYS.SAPRestApi.Models;
+
+[assembly: OwinStartup(typeof(GRINTSYS.SAPRestApi.Startup))]
 
 namespace GRINTSYS.SAPRestApi
 {
-    public static class WebApiConfig
+    public class Startup
     {
-        public static void Register(HttpConfiguration config)
+        public void Configuration(IAppBuilder app)
         {
-            var json = config.Formatters.JsonFormatter;
-            json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
-            config.Formatters.Remove(config.Formatters.XmlFormatter);
+            GlobalConfiguration.Configuration
+                .UseSqlServerStorage("HangFireConextion");
 
-            // Configuración y servicios de API web
             var container = new UnityContainer();
             container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IProductService, ProductService>();
@@ -29,16 +33,11 @@ namespace GRINTSYS.SAPRestApi
             container.RegisterType<IClientRepository, ClientRepository>();
             container.RegisterType<IClientService, ClientService>();
 
-            config.DependencyResolver = new UnityResolver(container);
+            //app.DependencyResolver = new UnityResolver(container);
+            GlobalConfiguration.Configuration.UseActivator(new UnityJobActivator(container));
 
-            // Rutas de API web
-            config.MapHttpAttributeRoutes();
-
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
         }
     }
 }

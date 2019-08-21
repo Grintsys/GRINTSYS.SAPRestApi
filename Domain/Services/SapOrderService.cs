@@ -21,7 +21,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private IOrderService _orderService;
         private IClientService _clientService;
-        public SapOrder(IOrderService orderService, IClientService clientService)
+        public SapOrder(IOrderService orderService, IClientService clientService): base()
         {
             _orderService = orderService;
             _clientService = clientService;

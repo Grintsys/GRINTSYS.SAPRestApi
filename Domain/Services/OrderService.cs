@@ -11,7 +11,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
     public class OrderService: IOrderService
     {
         private readonly IOrderRepository _orderRepository;
-        public OrderService(IOrderRepository orderRepository)
+        public OrderService(IOrderRepository orderRepository):base()
         {
             _orderRepository = orderRepository;
         }

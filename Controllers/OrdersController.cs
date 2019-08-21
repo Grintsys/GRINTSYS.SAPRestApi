@@ -3,6 +3,7 @@ using GRINTSYS.SAPRestApi.Domain.Output;
 using GRINTSYS.SAPRestApi.Domain.Services;
 using GRINTSYS.SAPRestApi.Domain.Services.Input;
 using GRINTSYS.SAPRestApi.Models;
+using Hangfire;
 using System;
 using System.Linq.Expressions;
 using System.Net;
@@ -16,71 +17,35 @@ namespace GRINTSYS.SAPRestApi.Controllers
     public class OrdersController : ApiController
     {
         private readonly ISapDocumentService _sapDocumentService;
-        private readonly OrderService _orderService;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private static readonly Expression<Func<Order, OrderOuput>> AsOrderDto =
-           x => new OrderOuput
-           {
-               Id = x.Id,
-               CardCode = x.CardCode,
-               Comment= x.Comment,
-               LastMessage = x.LastMessage,
-               Status = x.Status,
-               UserId = x.UserId,
-               CreationTime = x.CreationTime
-           };
-
-        public OrdersController(SapOrder sapDocumentService, 
-            OrderService orderService)
+        public OrdersController(SapOrder sapDocumentService)
         {
             _sapDocumentService = sapDocumentService;
-            _orderService = orderService;
-        }
-
-        // GET api/orders
-        [ResponseType(typeof(TaskResponse))]
-        //[AcceptVerbs("POST,GET")]
-        [HttpPost]
-        //[HttpGet]
-        //[Route("orders/create")]
-        public async Task<IHttpActionResult> Post([FromBody] OrderInput input)
-        {
-            log.Info("[POST] /api/orders");
-            var result = await _sapDocumentService.Execute(new SAPOrderInput() { Id = input.Id});
-
-            return Ok(result);
         }
 
         // [GET] api/orders/1
         [ResponseType(typeof(TaskResponse))]
-        public async Task<IHttpActionResult> GetOrder(int id)
+        public async Task<IHttpActionResult> Get(int id)
         {
-            /*
-            log.Info("[GET] /api/orders/" + id);
-            var x = await _orderService.GetAsync(id);
-
-            if( x == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(new OrderOuput
-            {
-                Id = x.Id,
-                CardCode = x.CardCode,
-                Comment = x.Comment,
-                LastMessage = x.LastMessage,
-                Status = x.Status,
-                UserId = x.UserId,
-                CreationTime = x.CreationTime
-            });
-            */
-
             log.Info("[GET] api/orders/1");
-            var result = await _sapDocumentService.Execute(new SAPOrderInput() { Id = id });
+
+            var jobId = BackgroundJob.Enqueue(
+                () => this.CreateSalesOrderOnSap(id));
+
+            var result = new TaskResponse()
+            {
+                Success = true,
+                Message = String.Format("Ejecutandose JobId:{0}", jobId)
+            };
 
             return Ok(result);
+        }
+
+        [AutomaticRetry(Attempts = 0)]
+        public void CreateSalesOrderOnSap(int orderId)
+        {
+             _sapDocumentService.Execute(new SAPOrderInput() { Id = orderId });
         }
     }
 }
