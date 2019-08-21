@@ -86,6 +86,9 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                 order.Status = (int)OrderStatus.PreliminarEnSAP;
                 await _orderService.UpdateAsync(order);
 
+                //recomended from http://www.appseconnect.com/di-api-memory-leak-in-sap-business-one-9-0/
+                //System.Runtime.InteropServices.Marshal.ReleaseComObject(salesOrder);
+                salesOrder = null;
                 company.Disconnect();
             }catch(Exception e)
             {
