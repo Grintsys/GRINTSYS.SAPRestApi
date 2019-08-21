@@ -59,7 +59,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                     salesOrder.Lines.WarehouseCode = item.WarehouseCode;
                     //Fixed by tenant
                     salesOrder.Lines.CostingCode = "303";
-                    salesOrder.Lines.CostingCode2 = "3001-01";
+                    salesOrder.Lines.CostingCode2 = "3003-01";
                     salesOrder.Lines.CostingCode3 = dinension;
                     salesOrder.Lines.Add();
                 }
