@@ -164,3 +164,88 @@ DEBUG 2019-08-21 07:50:15,269 551576ms JobCancellationWatcher CallSite.Target   
 DEBUG 2019-08-21 07:50:15,270 551577ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
 DEBUG 2019-08-21 07:50:20,273 556579ms JobCancellationWatcher CallSite.Target    - Checking for aborted jobs...
 DEBUG 2019-08-21 07:50:20,273 556579ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
+INFO  2019-08-21 13:19:34,438   920ms ServerObjectsInstaller CallSite.Target    - Start installing Hangfire SQL objects...
+INFO  2019-08-21 13:19:35,709  2191ms ServerObjectsInstaller CallSite.Target    - Hangfire SQL objects installed.
+INFO  2019-08-21 13:19:35,778  2260ms BackgroundJobServer    CallSite.Target    - Starting Hangfire Server using job storage: 'SQL Server: 181.199.177.162@SAPMiddleware.Jobs'
+INFO  2019-08-21 13:19:35,779  2261ms BackgroundJobServer    CallSite.Target    - Using the following options for SQL Server job storage: Queue poll interval: 00:00:15.
+INFO  2019-08-21 13:19:35,780  2262ms BackgroundJobServer    CallSite.Target    - Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+DEBUG 2019-08-21 13:19:35,808  2290ms BackgroundExecution    CallSite.Target    - Execution loop BackgroundServerProcess:22485de5 has started in 10.2675 ms
+DEBUG 2019-08-21 13:19:35,819  2301ms ackgroundServerProcess CallSite.Target    - Server desktop-442vsq0:232:0c2c771c is announcing itself...
+INFO  2019-08-21 13:19:36,176  2657ms ackgroundServerProcess CallSite.Target    - Server desktop-442vsq0:232:0c2c771c successfully announced in 355.0711 ms
+DEBUG 2019-08-21 13:19:36,188  2669ms BackgroundExecution    CallSite.Target    - Execution loop ServerHeartbeatProcess:f35ebc81 has started in 5.777 ms
+INFO  2019-08-21 13:19:36,189  2670ms ackgroundServerProcess CallSite.Target    - Server desktop-442vsq0:232:0c2c771c is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+DEBUG 2019-08-21 13:19:36,196  2677ms ServerHeartbeatProcess CallSite.Target    - Server desktop-442vsq0:232:0c2c771c waiting for 00:00:30 delay before sending a heartbeat
+DEBUG 2019-08-21 13:19:36,199  2680ms BackgroundExecution    CallSite.Target    - Execution loop ServerWatchdog:e1ff41d2 has started in 8.7681 ms
+DEBUG 2019-08-21 13:19:36,204  2685ms BackgroundExecution    CallSite.Target    - Execution loop ServerJobCancellationWatcher:c906a256 has started in 5.9039 ms
+DEBUG 2019-08-21 13:19:36,206  2687ms JobCancellationWatcher CallSite.Target    - Checking for aborted jobs...
+DEBUG 2019-08-21 13:19:36,208  2689ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
+DEBUG 2019-08-21 13:19:36,210  2691ms BackgroundExecution    CallSite.Target    - Execution loop ExpirationManager:a646d282 has started in 5.0521 ms
+DEBUG 2019-08-21 13:19:36,213  2694ms ExpirationManager      CallSite.Target    - Removing outdated records from the 'AggregatedCounter' table...
+DEBUG 2019-08-21 13:19:36,218  2699ms BackgroundExecution    CallSite.Target    - Execution loop CountersAggregator:01b347c8 has started in 9.1352 ms
+DEBUG 2019-08-21 13:19:36,219  2700ms CountersAggregator     CallSite.Target    - Aggregating records in 'Counter' table...
+DEBUG 2019-08-21 13:19:36,223  2704ms BackgroundExecution    CallSite.Target    - Execution loop Worker:56217ae4 has started in 4.9562 ms
+DEBUG 2019-08-21 13:19:36,223  2704ms BackgroundExecution    CallSite.Target    - Execution loop Worker:7e1116fb has started in 4.988 ms
+DEBUG 2019-08-21 13:19:36,225  2706ms BackgroundExecution    CallSite.Target    - Execution loop Worker:4fab6487 has started in 6.7881 ms
+DEBUG 2019-08-21 13:19:36,231  2712ms BackgroundExecution    CallSite.Target    - Execution loop Worker:3398ec21 has started in 12.6531 ms
+DEBUG 2019-08-21 13:19:36,243  2724ms BackgroundExecution    CallSite.Target    - Execution loop Worker:fd1d087f has started in 23.9762 ms
+DEBUG 2019-08-21 13:19:36,249  2730ms BackgroundExecution    CallSite.Target    - Execution loop Worker:c755610e has started in 30.79 ms
+DEBUG 2019-08-21 13:19:36,257  2738ms BackgroundExecution    CallSite.Target    - Execution loop Worker:6220e56e has started in 38.627 ms
+DEBUG 2019-08-21 13:19:36,263  2744ms BackgroundExecution    CallSite.Target    - Execution loop Worker:4d2fef1a has started in 44.2194 ms
+DEBUG 2019-08-21 13:19:36,268  2749ms BackgroundExecution    CallSite.Target    - Execution loop Worker:4fc75392 has started in 49.3663 ms
+DEBUG 2019-08-21 13:19:36,271  2752ms BackgroundExecution    CallSite.Target    - Execution loop Worker:90af017f has started in 52.1998 ms
+DEBUG 2019-08-21 13:19:36,275  2756ms BackgroundExecution    CallSite.Target    - Execution loop Worker:cb9e8ce4 has started in 56.414 ms
+DEBUG 2019-08-21 13:19:36,277  2758ms BackgroundExecution    CallSite.Target    - Execution loop Worker:8ad15e94 has started in 58.9139 ms
+DEBUG 2019-08-21 13:19:36,280  2761ms BackgroundExecution    CallSite.Target    - Execution loop Worker:22102242 has started in 61.9543 ms
+DEBUG 2019-08-21 13:19:36,283  2764ms BackgroundExecution    CallSite.Target    - Execution loop Worker:1c209c9c has started in 64.5855 ms
+DEBUG 2019-08-21 13:19:36,286  2767ms BackgroundExecution    CallSite.Target    - Execution loop Worker:f405a667 has started in 67.3921 ms
+INFO  2019-08-21 13:19:36,289  2770ms ServerWatchdog         CallSite.Target    - 1 servers were removed due to timeout
+DEBUG 2019-08-21 13:19:36,290  2771ms BackgroundExecution    CallSite.Target    - Execution loop Worker:696b9a44 has started in 71.1007 ms
+DEBUG 2019-08-21 13:19:36,294  2775ms BackgroundExecution    CallSite.Target    - Execution loop Worker:54317a4f has started in 75.9616 ms
+DEBUG 2019-08-21 13:19:36,318  2799ms BackgroundExecution    CallSite.Target    - Execution loop Worker:9a57ff25 has started in 99.6744 ms
+DEBUG 2019-08-21 13:19:36,318  2799ms BackgroundExecution    CallSite.Target    - Execution loop Worker:1de510a7 has started in 99.7173 ms
+DEBUG 2019-08-21 13:19:36,324  2805ms BackgroundExecution    CallSite.Target    - Execution loop Worker:6b97bac0 has started in 105.6847 ms
+DEBUG 2019-08-21 13:19:36,333  2814ms BackgroundExecution    CallSite.Target    - Execution loop DelayedJobScheduler:6f14e10e has started in 9.9644 ms
+INFO  2019-08-21 13:19:36,339  2820ms ackgroundServerProcess CallSite.Target    - Server desktop-442vsq0:232:0c2c771c all the dispatchers started
+DEBUG 2019-08-21 13:19:36,345  2826ms BackgroundExecution    CallSite.Target    - Execution loop RecurringJobScheduler:3e356f98 has started in 14.4488 ms
+DEBUG 2019-08-21 13:19:36,383  2864ms CountersAggregator     CallSite.Target    - Records from the 'Counter' table aggregated.
+DEBUG 2019-08-21 13:19:36,750  3231ms ExpirationManager      CallSite.Target    - Outdated records removed from the 'AggregatedCounter' table.
+DEBUG 2019-08-21 13:19:36,750  3231ms ExpirationManager      CallSite.Target    - Removing outdated records from the 'Job' table...
+DEBUG 2019-08-21 13:19:37,605  4086ms ExpirationManager      CallSite.Target    - Outdated records removed from the 'Job' table.
+DEBUG 2019-08-21 13:19:37,605  4086ms ExpirationManager      CallSite.Target    - Removing outdated records from the 'List' table...
+DEBUG 2019-08-21 13:19:38,482  4963ms ExpirationManager      CallSite.Target    - Outdated records removed from the 'List' table.
+DEBUG 2019-08-21 13:19:38,482  4963ms ExpirationManager      CallSite.Target    - Removing outdated records from the 'Set' table...
+DEBUG 2019-08-21 13:19:38,721  5202ms ExpirationManager      CallSite.Target    - Outdated records removed from the 'Set' table.
+DEBUG 2019-08-21 13:19:38,721  5202ms ExpirationManager      CallSite.Target    - Removing outdated records from the 'Hash' table...
+DEBUG 2019-08-21 13:19:39,003  5484ms ExpirationManager      CallSite.Target    - Outdated records removed from the 'Hash' table.
+DEBUG 2019-08-21 13:19:41,221  7702ms JobCancellationWatcher CallSite.Target    - Checking for aborted jobs...
+DEBUG 2019-08-21 13:19:41,221  7702ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
+DEBUG 2019-08-21 13:19:46,222 12703ms JobCancellationWatcher CallSite.Target    - Checking for aborted jobs...
+DEBUG 2019-08-21 13:19:46,222 12703ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
+DEBUG 2019-08-21 13:19:51,222 17704ms JobCancellationWatcher CallSite.Target    - Checking for aborted jobs...
+DEBUG 2019-08-21 13:19:51,222 17704ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
+DEBUG 2019-08-21 13:19:56,224 22705ms JobCancellationWatcher CallSite.Target    - Checking for aborted jobs...
+DEBUG 2019-08-21 13:19:56,224 22705ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
+DEBUG 2019-08-21 13:20:01,267 27748ms JobCancellationWatcher CallSite.Target    - Checking for aborted jobs...
+DEBUG 2019-08-21 13:20:01,269 27750ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
+DEBUG 2019-08-21 13:20:06,286 32767ms JobCancellationWatcher CallSite.Target    - Checking for aborted jobs...
+DEBUG 2019-08-21 13:20:06,286 32767ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
+DEBUG 2019-08-21 13:20:06,337 32818ms ServerHeartbeatProcess CallSite.Target    - Server desktop-442vsq0:232:0c2c771c heartbeat successfully sent
+DEBUG 2019-08-21 13:20:06,337 32818ms ServerHeartbeatProcess CallSite.Target    - Server desktop-442vsq0:232:0c2c771c waiting for 00:00:30 delay before sending a heartbeat
+DEBUG 2019-08-21 13:20:11,323 37804ms JobCancellationWatcher CallSite.Target    - Checking for aborted jobs...
+DEBUG 2019-08-21 13:20:11,323 37804ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
+DEBUG 2019-08-21 13:20:16,372 42854ms JobCancellationWatcher CallSite.Target    - Checking for aborted jobs...
+DEBUG 2019-08-21 13:20:16,378 42860ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
+DEBUG 2019-08-21 13:20:21,379 47860ms JobCancellationWatcher CallSite.Target    - Checking for aborted jobs...
+DEBUG 2019-08-21 13:20:21,379 47860ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
+DEBUG 2019-08-21 13:20:26,379 52861ms JobCancellationWatcher CallSite.Target    - Checking for aborted jobs...
+DEBUG 2019-08-21 13:20:26,379 52861ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
+DEBUG 2019-08-21 13:20:31,380 57861ms JobCancellationWatcher CallSite.Target    - Checking for aborted jobs...
+DEBUG 2019-08-21 13:20:31,380 57861ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
+DEBUG 2019-08-21 13:20:36,381 62862ms JobCancellationWatcher CallSite.Target    - Checking for aborted jobs...
+DEBUG 2019-08-21 13:20:36,381 62862ms JobCancellationWatcher CallSite.Target    - No newly aborted jobs found.
+DEBUG 2019-08-21 13:20:36,437 62918ms ServerHeartbeatProcess CallSite.Target    - Server desktop-442vsq0:232:0c2c771c heartbeat successfully sent
+DEBUG 2019-08-21 13:20:36,437 62918ms ServerHeartbeatProcess CallSite.Target    - Server desktop-442vsq0:232:0c2c771c waiting for 00:00:30 delay before sending a heartbeat
