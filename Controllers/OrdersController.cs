@@ -45,7 +45,7 @@ namespace GRINTSYS.SAPRestApi.Controllers
         [AutomaticRetry(Attempts = 0)]
         public void CreateSalesOrderOnSap(int orderId)
         {
-            //ISACK: justo aqui deberia de mandar a hacer el otro pedido de GT y HN si estamos mandando pedidos de GT
+            //ISACK: justo aqui deberia de mandar a hacer el otro pedido de GT y HN SOLO SI estamos mandando pedidos de GT
              _sapDocumentService.Execute(new SAPOrderInput() { Id = orderId });
         }
     }

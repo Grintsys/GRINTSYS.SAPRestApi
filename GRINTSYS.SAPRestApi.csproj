@@ -240,6 +240,7 @@
     <Compile Include="Models\ProductVariant.cs" />
     <Compile Include="Models\SAPRestApiContext.cs" />
     <Compile Include="Models\UnityResolver.cs" />
+    <Compile Include="Persistence\Repositories\ITenantRepository.cs" />
     <Compile Include="Persistence\Repositories\IClientRepository.cs" />
     <Compile Include="Persistence\Repositories\IInvoiceRepository.cs" />
     <Compile Include="Persistence\Repositories\InvoiceRepository.cs" />
@@ -250,6 +251,7 @@
     <Compile Include="Persistence\Repositories\OrderRepository.cs" />
     <Compile Include="Persistence\Repositories\PaymentRepository.cs" />
     <Compile Include="Persistence\Repositories\ProductRepository.cs" />
+    <Compile Include="Persistence\Repositories\TenantRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Persistence\Repositories\BaseRepository.cs" />
     <Compile Include="Startup.cs" />
