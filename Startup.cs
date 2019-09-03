@@ -32,6 +32,7 @@ namespace GRINTSYS.SAPRestApi
             container.RegisterType<ISapDocumentService, SapPayment>();
             container.RegisterType<IClientRepository, ClientRepository>();
             container.RegisterType<IClientService, ClientService>();
+            container.RegisterType<ITenantRepository, TenantRepository>();
 
             //app.DependencyResolver = new UnityResolver(container);
             GlobalConfiguration.Configuration.UseActivator(new UnityJobActivator(container));

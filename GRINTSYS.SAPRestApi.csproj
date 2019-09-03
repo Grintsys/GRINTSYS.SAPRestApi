@@ -201,22 +201,22 @@
     <Compile Include="Domain\Inputs\SAPOrderInput.cs" />
     <Compile Include="Domain\Output\OrderOuput.cs" />
     <Compile Include="Domain\Output\TaskResponse.cs" />
-    <Compile Include="Domain\Services\IInvoiceService.cs" />
-    <Compile Include="Domain\Services\Input\OrderInput.cs" />
-    <Compile Include="Domain\Services\InvoiceService.cs" />
-    <Compile Include="Domain\Services\IClientService.cs" />
-    <Compile Include="Domain\Services\IOrderService.cs" />
-    <Compile Include="Domain\Services\IPaymentService.cs" />
+    <Compile Include="Domain\Services\Payments\IInvoiceService.cs" />
+    <Compile Include="Domain\Inputs\OrderInput.cs" />
+    <Compile Include="Domain\Services\Payments\InvoiceService.cs" />
+    <Compile Include="Domain\Services\Payments\IClientService.cs" />
+    <Compile Include="Domain\Services\Orders\IOrderService.cs" />
+    <Compile Include="Domain\Services\Payments\IPaymentService.cs" />
     <Compile Include="Domain\Services\ISapDocumentService.cs" />
-    <Compile Include="Domain\Services\ClientService.cs" />
-    <Compile Include="Domain\Services\OrderService.cs" />
-    <Compile Include="Domain\Services\PaymentService.cs" />
+    <Compile Include="Domain\Services\Payments\ClientService.cs" />
+    <Compile Include="Domain\Services\Orders\OrderService.cs" />
+    <Compile Include="Domain\Services\Payments\PaymentService.cs" />
     <Compile Include="Domain\Services\SapDocumentServiceBase.cs" />
-    <Compile Include="Domain\Services\SapOrderService.cs" />
-    <Compile Include="Domain\Services\SapPaymentService.cs" />
+    <Compile Include="Domain\Services\Orders\SapOrderService.cs" />
+    <Compile Include="Domain\Services\Payments\SapPaymentService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Domain\Services\IProductService.cs" />
-    <Compile Include="Domain\Services\ProductService.cs" />
+    <Compile Include="Domain\Services\Products\IProductService.cs" />
+    <Compile Include="Domain\Services\Products\ProductService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

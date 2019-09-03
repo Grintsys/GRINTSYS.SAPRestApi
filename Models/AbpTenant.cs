@@ -52,6 +52,10 @@ namespace GRINTSYS.SAPRestApi.Models
 
         public string GoogleUA { get; set; }
 
+        public string SAPDatabase { get; set; }
+
+        public string CostingCode { get; set; }
+        public string CostingCode2 { get; set; }
         public virtual AbpUser AbpUser { get; set; }
 
         public virtual AbpUser AbpUser1 { get; set; }

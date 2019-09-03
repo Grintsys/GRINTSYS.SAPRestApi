@@ -2,6 +2,7 @@
 using GRINTSYS.SAPRestApi.Domain.Output;
 using GRINTSYS.SAPRestApi.Domain.Services;
 using GRINTSYS.SAPRestApi.Inputs;
+using GRINTSYS.SAPRestApi.Persistence.Repositories;
 using SAPbobsCOM;
 using System;
 using System.Threading.Tasks;
@@ -21,10 +22,14 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private IOrderService _orderService;
         private IClientService _clientService;
-        public SapOrder(IOrderService orderService, IClientService clientService): base()
+        private ITenantRepository _tenantRepository;
+        public SapOrder(IOrderService orderService, 
+            IClientService clientService,
+            ITenantRepository tenantRepository): base()
         {
             _orderService = orderService;
             _clientService = clientService;
+            _tenantRepository = tenantRepository;
         }
 
         public override async Task<TaskResponse> Execute(ISapDocumentInput input)
@@ -36,8 +41,9 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
             try
             {
                 var order = await _orderService.GetAsync(((SAPOrderInput)input).Id);
+                var tenant = await _tenantRepository.GetTenantById(order.TenantId);
 
-                Company company = this.Connect(new SapSettingsInput());
+                Company company = this.Connect(new SapSettingsInput { Companydb = tenant.SAPDatabase });
 
                 IDocuments salesOrder = (IDocuments)company.GetBusinessObject(BoObjectTypes.oOrders);
                 salesOrder.CardCode = order.CardCode;
@@ -48,7 +54,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
 
                 //fix for M2 dimension
                 var client = await _clientService.GetByCardCodeAsync(order.CardCode);
-                string dinension = client == null ? "" : client.Dimension; 
+                string dimension = client == null ? "" : client.Dimension; 
 
                 foreach (var item in order.OrderItems)
                 {
@@ -57,17 +63,17 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                     salesOrder.Lines.TaxCode = item.TaxCode;
                     salesOrder.Lines.DiscountPercent = item.DiscountPercent;
                     salesOrder.Lines.WarehouseCode = item.WarehouseCode;
-                    //Fixed by tenant
-                    salesOrder.Lines.CostingCode = "303";
-                    salesOrder.Lines.CostingCode2 = "3003-01";
-                    salesOrder.Lines.CostingCode3 = dinension;
+                    //settigs by tenant
+                    salesOrder.Lines.CostingCode = tenant.CostingCode;
+                    salesOrder.Lines.CostingCode2 = tenant.CostingCode2;
+                    salesOrder.Lines.CostingCode3 = dimension;
                     salesOrder.Lines.Add();
                 }
                 // add Sales Order
                 if (salesOrder.Add() == 0)
                 {
                     message = String.Format("Successfully added Sales Order DocEntry: {0}", company.GetNewObjectKey());
-                    //Logger.Info(message); 
+                    order.Status = (int)OrderStatus.PreliminarEnSAP;
                     log.Info(message);
                 }
                 else
@@ -79,15 +85,15 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
 
                     response.Success = false;
                     response.Message = message;
+                    order.Status = (int)OrderStatus.ErrorAlCrearEnSAP;
                     log.Error(message);
                 }
 
-                order.LastMessage = message;
-                order.Status = (int)OrderStatus.PreliminarEnSAP;
+                order.LastMessage = message;              
                 await _orderService.UpdateAsync(order);
 
                 //recomended from http://www.appseconnect.com/di-api-memory-leak-in-sap-business-one-9-0/
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(salesOrder);
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(salesOrder);
                 salesOrder = null;
                 company.Disconnect();
             }catch(Exception e)
