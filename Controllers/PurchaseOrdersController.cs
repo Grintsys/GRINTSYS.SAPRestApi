@@ -14,44 +14,43 @@ using System.Web.Http.Description;
 
 namespace GRINTSYS.SAPRestApi.Controllers
 {
-    public class OrdersController : ApiController
+    public class PurchaseOrdersController : ApiController
     {
         private readonly ISapDocumentService _sapDocumentService;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public OrdersController()
+        public PurchaseOrdersController()
         {
 
         }
-        public OrdersController(SapOrder sapDocumentService)
+        public PurchaseOrdersController(SapPurchaseOrder sapDocumentService)
         {
             _sapDocumentService = sapDocumentService;
         }
 
-        // [GET] api/orders/1
+        // [GET] api/purchaseorders/1
         [ResponseType(typeof(TaskResponse))]
         public async Task<IHttpActionResult> Get(int id)
         {
-            log.Info("[GET] api/orders/1");
+            log.Info($"[GET] api/purchaseorders/{id}");
 
             var jobId = BackgroundJob.Enqueue(
-                () => this.CreateSalesOrderOnSap(id));
+                () => this.CreatePurchaseOrderToSap(id));
 
             var result = new TaskResponse()
             {
                 Success = true,
-                Message = String.Format("Ejecutandose JobId:{0}", jobId)
+                Message = $"Ejecutandose JobId:{jobId}"
             };
 
             return Ok(result);
         }
 
         [AutomaticRetry(Attempts = 0)]
-        [Queue("saleorder_gt")]
-        public void CreateSalesOrderOnSap(int orderId)
+        [Queue("purchaseorder_gt")]
+        public void CreatePurchaseOrderToSap(int orderId)
         {
-                //ISACK: justo aqui deberia de mandar a hacer el otro pedido de GT y HN SOLO SI estamos mandando pedidos de GT
-                _sapDocumentService.Execute(new SAPOrderInput() { Id = orderId });
+            _sapDocumentService.Execute(new SAPOrderInput() { Id = orderId });
         }
     }
 }

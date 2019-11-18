@@ -42,19 +42,23 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
             {
                 var order = await _orderService.GetAsync(((SAPOrderInput)input).Id);
                 var tenant = await _tenantRepository.GetTenantById(order.TenantId);
+                
+                //fix for M2 dimension
+                var client = await _clientService.GetByCardCodeAsync(order.CardCode);
+                string dimension = client == null ? string.Empty : string.IsNullOrWhiteSpace(client.Dimension) ? string.Empty : client.Dimension;
 
                 Company company = this.Connect(new SapSettingsInput { Companydb = tenant.SAPDatabase });
 
                 IDocuments salesOrder = (IDocuments)company.GetBusinessObject(BoObjectTypes.oOrders);
                 salesOrder.CardCode = order.CardCode;
+                salesOrder.CardName = client == null ? string.Empty : string.IsNullOrWhiteSpace(client.Name) ? string.Empty : client.Name;
                 salesOrder.Comments = order.Comment;
                 salesOrder.Series = order.Series;
                 salesOrder.SalesPersonCode = order.AbpUser.SalesPersonId;
                 salesOrder.DocDueDate = order.CreationTime;
 
-                //fix for M2 dimension
-                var client = await _clientService.GetByCardCodeAsync(order.CardCode);
-                string dimension = client == null ? "" : client.Dimension; 
+                if (salesOrder.UserFields.Fields.Count > 0)
+                    salesOrder.UserFields.Fields.Item("U_FacNit").Value = client == null ? string.Empty : string.IsNullOrWhiteSpace(client.RTN) ? string.Empty : client.RTN;
 
                 foreach (var item in order.OrderItems)
                 {
@@ -64,7 +68,8 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                     salesOrder.Lines.DiscountPercent = item.DiscountPercent;
                     salesOrder.Lines.WarehouseCode = item.WarehouseCode;
                     //settigs by tenant
-                    salesOrder.Lines.CostingCode = tenant.CostingCode;
+                    salesOrder.Lines.CostingCode = tenant.CostingCode;	
+
                     salesOrder.Lines.CostingCode2 = tenant.CostingCode2;
                     salesOrder.Lines.CostingCode3 = dimension;
                     salesOrder.Lines.Add();

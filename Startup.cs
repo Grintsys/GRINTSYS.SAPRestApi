@@ -26,10 +26,13 @@ namespace GRINTSYS.SAPRestApi
             container.RegisterType<IOrderService, OrderService>();
             container.RegisterType<IPaymentRepository, PaymentRepository>();
             container.RegisterType<IPaymentService, PaymentService>();
+            container.RegisterType<IPurchaseOrderRepository, PurchaseOrderRepository>();
+            container.RegisterType<IPurchaseOrderService, PurchaseOrderService>();
             container.RegisterType<IInvoiceRepository, InvoiceRepository>();
             container.RegisterType<IInvoiceService, InvoiceService>();
             container.RegisterType<ISapDocumentService, SapOrder>();
             container.RegisterType<ISapDocumentService, SapPayment>();
+            container.RegisterType<ISapDocumentService, SapPurchaseOrder>();
             container.RegisterType<IClientRepository, ClientRepository>();
             container.RegisterType<IClientService, ClientService>();
             container.RegisterType<ITenantRepository, TenantRepository>();
@@ -37,8 +40,16 @@ namespace GRINTSYS.SAPRestApi
             //app.DependencyResolver = new UnityResolver(container);
             GlobalConfiguration.Configuration.UseActivator(new UnityJobActivator(container));
 
+            var options = new BackgroundJobServerOptions
+            {
+                WorkerCount = 4,
+                Queues = new[] { "purchaseorder_gt", "saleorder_gt" }
+            };
+
             app.UseHangfireDashboard();
-            app.UseHangfireServer();
+
+            app.UseHangfireServer(options);
+
         }
     }
 }

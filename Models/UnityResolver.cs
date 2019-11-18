@@ -21,7 +21,7 @@ namespace GRINTSYS.SAPRestApi.Models
             {
                 return _container.Resolve(serviceType);
             }
-            catch (ResolutionFailedException)
+            catch (ResolutionFailedException ex)
             {
                 return null;
             }

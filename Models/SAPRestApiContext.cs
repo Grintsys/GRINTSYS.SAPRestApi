@@ -30,6 +30,9 @@ namespace GRINTSYS.SAPRestApi.Models
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductVariant> ProductVariants { get; set; }
+        public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+        public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
+        public virtual DbSet<PurchaseOrderExpense> PurchaseOrderExpenses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
