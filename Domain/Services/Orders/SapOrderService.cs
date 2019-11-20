@@ -6,6 +6,7 @@ using GRINTSYS.SAPRestApi.Persistence.Repositories;
 using SAPbobsCOM;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace GRINTSYS.SAPRestApi.Domain.Services
 {
@@ -34,7 +35,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
 
         public override async Task<TaskResponse> Execute(ISapDocumentInput input)
         {
-            log.Info("Begin to create a order");
+            log.Info($"Begin to create a order {((SAPOrderInput)input).Id}");
 
             TaskResponse response = new TaskResponse() { Success = true, Message = "" };
             String message = "";
@@ -60,7 +61,8 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                 if (salesOrder.UserFields.Fields.Count > 0)
                     salesOrder.UserFields.Fields.Item("U_FacNit").Value = client == null ? string.Empty : string.IsNullOrWhiteSpace(client.RTN) ? string.Empty : client.RTN;
 
-                foreach (var item in order.OrderItems)
+                               
+                foreach (var item in order.OrderItems.OrderBy(s=>s.Code))
                 {
                     salesOrder.Lines.ItemCode = item.Code;
                     salesOrder.Lines.Quantity = item.Quantity;

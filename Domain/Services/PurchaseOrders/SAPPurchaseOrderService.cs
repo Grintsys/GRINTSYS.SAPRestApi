@@ -22,7 +22,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
 
         public override async Task<TaskResponse> Execute(ISapDocumentInput input)
         {
-            log.Info("Begin to create a purchase order");
+            log.Info($"Begin to create a purchase order {((SAPOrderInput)input).Id}");
 
             TaskResponse response = new TaskResponse() { Success = true, Message = string.Empty };
             string message = string.Empty;
@@ -35,11 +35,11 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
 
                 IDocuments sapPurchaseOrder = (IDocuments)company.GetBusinessObject(BoObjectTypes.oPurchaseOrders);
                 sapPurchaseOrder.DocType = BoDocumentTypes.dDocument_Items;
-                sapPurchaseOrder.DocDate = purchaseOrder.DocDate;
+                sapPurchaseOrder.DocDate = DateTime.Now;//purchaseOrder.DocDate;
                 sapPurchaseOrder.DocDueDate = DateTime.Now;
                 sapPurchaseOrder.CardCode = "P000001";//purchaseOrder.CardCode;
                 sapPurchaseOrder.CardName = "VAN HEUSEN DE CENTRO AMERICA, S.de R.L. de C.V.";//purchaseOrder.CardName;
-                sapPurchaseOrder.DocTotal = Convert.ToDouble(purchaseOrder.DocTotal);
+                //sapPurchaseOrder.DocTotal = Convert.ToDouble(purchaseOrder.DocTotal);
 
                 sapPurchaseOrder.DocCurrency = purchaseOrder.DocCurrency;
                 sapPurchaseOrder.Comments = purchaseOrder.Comments;
@@ -59,12 +59,12 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                 foreach (var item in purchaseOrder.PurchaseOrderDetails)
                 {
                     sapPurchaseOrder.Lines.ItemCode = item.ItemCode;
-                    sapPurchaseOrder.Lines.ItemDescription = item.Dscription;
+                    //sapPurchaseOrder.Lines.ItemDescription = item.Dscription;
                     sapPurchaseOrder.Lines.Quantity = item.Quantity;
                     sapPurchaseOrder.Lines.Price = Convert.ToDouble(item.Price);
                     sapPurchaseOrder.Lines.Currency = item.LineCurrency;
                     sapPurchaseOrder.Lines.TaxCode = item.TaxCode;
-                    sapPurchaseOrder.Lines.LineTotal = Convert.ToDouble(item.LineTotal);
+                    //sapPurchaseOrder.Lines.LineTotal = Convert.ToDouble(item.LineTotal);
 
                     //Settigs By Tenant
                     //sapPurchaseOrder.Lines.CostingCode = "303"/*tenant.CostingCode*/;
@@ -74,7 +74,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                     sapPurchaseOrder.Lines.Add();
                 }
 
-                foreach (var item in purchaseOrder.PurchaseOrderExpenses)
+                /*foreach (var item in purchaseOrder.PurchaseOrderExpenses)
                 {
                     sapPurchaseOrder.Expenses.ExpenseCode = item.ExpnsCode;
                     sapPurchaseOrder.Expenses.TaxCode = item.TaxCode;
@@ -83,7 +83,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                     //sapPurchaseOrder.Expenses.UserFields.Fields.Item("U_TipoA").Value = item.U_TipoA;
                     
                     sapPurchaseOrder.Expenses.Add();
-                }                
+                }*/                
 
                 if (sapPurchaseOrder.Add() == 0)
                 {
