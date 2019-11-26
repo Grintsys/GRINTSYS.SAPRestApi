@@ -59,9 +59,11 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
                 salesOrder.DocDueDate = order.CreationTime;
 
                 if (salesOrder.UserFields.Fields.Count > 0)
+                {
                     salesOrder.UserFields.Fields.Item("U_FacNit").Value = client == null ? string.Empty : string.IsNullOrWhiteSpace(client.RTN) ? string.Empty : client.RTN;
-
-                               
+                    salesOrder.UserFields.Fields.Item("U_M2_UUID").Value = order.U_M2_UUID.ToString();
+                }
+                                                   
                 foreach (var item in order.OrderItems.OrderBy(s=>s.Code))
                 {
                     salesOrder.Lines.ItemCode = item.Code;

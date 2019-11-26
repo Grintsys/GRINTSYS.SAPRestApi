@@ -37,6 +37,7 @@ namespace GRINTSYS.SAPRestApi.Models
 
         public string CardCode { get; set; }
 
+        public virtual Guid U_M2_UUID { get; set; }
         public virtual AbpUser AbpUser { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
