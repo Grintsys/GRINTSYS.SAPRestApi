@@ -10,5 +10,6 @@ namespace GRINTSYS.SAPRestApi.Persistence.Repositories
     public interface IPaymentRepository
     {
         Task<Payment> GetAsync(int id);
+        Task UpdateAsync(Payment payment);
     }
 }

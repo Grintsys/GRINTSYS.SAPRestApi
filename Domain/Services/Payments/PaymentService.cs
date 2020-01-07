@@ -20,5 +20,9 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
         {
             return await _paymentRepository.GetAsync(id);
         }
+        public Task UpdateAsync(Payment payment)
+        {
+            return _paymentRepository.UpdateAsync(payment);
+        }
     }
 }

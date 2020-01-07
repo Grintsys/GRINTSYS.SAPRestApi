@@ -6,7 +6,7 @@ namespace GRINTSYS.SAPRestApi.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("PaymentInvoiceItem")]
+    [Table("paymentInvoiceItems")]
     public partial class PaymentInvoiceItem
     {
         public int Id { get; set; }

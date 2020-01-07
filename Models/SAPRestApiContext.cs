@@ -26,7 +26,7 @@ namespace GRINTSYS.SAPRestApi.Models
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<OrderItem> OrderItems { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<PaymentInvoiceItem> PaymentInvoiceItems { get; set; }
+        public virtual DbSet<PaymentInvoiceItem> paymentInvoiceItems { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductVariant> ProductVariants { get; set; }

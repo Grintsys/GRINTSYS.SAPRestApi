@@ -17,6 +17,10 @@ namespace GRINTSYS.SAPRestApi.Controllers
         private readonly ISapDocumentService _sapDocumentService;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        public PaymentsController()
+        {
+
+        }
         public PaymentsController(SapPayment sapDocumentService)
         {
             _sapDocumentService = sapDocumentService;
@@ -40,6 +44,7 @@ namespace GRINTSYS.SAPRestApi.Controllers
         }
 
         [AutomaticRetry(Attempts = 0)]
+        [Queue("payment_gt")]
         public void CreatePaymentOnSap(int paymentId)
         {
             _sapDocumentService.Execute(new SAPPaymentInput() { Id = paymentId });

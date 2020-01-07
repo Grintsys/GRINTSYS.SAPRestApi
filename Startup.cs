@@ -43,7 +43,7 @@ namespace GRINTSYS.SAPRestApi
             var options = new BackgroundJobServerOptions
             {
                 WorkerCount = 4,
-                Queues = new[] { "purchaseorder_gt", "saleorder_gt" }
+                Queues = new[] { "purchaseorder_gt", "saleorder_gt", "payment_gt" }
             };
 
             app.UseHangfireDashboard();

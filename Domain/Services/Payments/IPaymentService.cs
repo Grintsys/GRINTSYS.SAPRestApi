@@ -10,5 +10,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
     public interface IPaymentService
     {
         Task<Payment> GetAsync(int id);
+        Task UpdateAsync(Payment payment);
+        
     }
 }

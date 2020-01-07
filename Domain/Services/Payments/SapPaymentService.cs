@@ -2,6 +2,7 @@
 using GRINTSYS.SAPRestApi.Domain.Output;
 using GRINTSYS.SAPRestApi.Inputs;
 using GRINTSYS.SAPRestApi.Models;
+using GRINTSYS.SAPRestApi.Persistence.Repositories;
 using SAPbobsCOM;
 using System;
 using System.Threading.Tasks;
@@ -10,120 +11,124 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
 {
     public enum PaymentStatus
     {
-        CreadoEnAplicacion = 1,
-        CreadoEnSAP = 2,
-        Error = 3,
-        CanceladoPorFinanzas = 4,
-        Autorizado = 5
+        CreadoEnAplicacion = 0,
+        CreadoEnSAP = 1,
+        Error = 2,
+        CanceladoPorFinanzas = 3,
+        Autorizado = 4
     }
 
     public enum PaymentType
     {
-        Efectivo = 1,
-        Cheque = 2,
-        Transferencia = 0
+        Efectivo = 0,
+        Cheque = 1,
+        Transferencia = 2
     }
 
-    public class SapPayment: SapDocumentServiceBase
+    public class SapPayment : SapDocumentServiceBase
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IPaymentService _paymentService;
+        private ITenantRepository _tenantRepository;
 
-        public SapPayment(IPaymentService paymentService):base()
+        public SapPayment(IPaymentService paymentService,
+            ITenantRepository tenantRepository) : base()
         {
             _paymentService = paymentService;
+            _tenantRepository = tenantRepository;
         }
 
         public override async Task<TaskResponse> Execute(ISapDocumentInput input)
         {
-            var response = new TaskResponse();
-            var payment = await _paymentService.GetAsync(((SAPPaymentInput)input).Id);
-
-            Company company = this.Connect(new SapSettingsInput());
-
-            Payments paymentDoc = (Payments)company.GetBusinessObject(BoObjectTypes.oIncomingPayments);
-            paymentDoc.DocObjectCode = BoPaymentsObjectType.bopot_IncomingPayments;
-
-            paymentDoc.DocTypte = BoRcptTypes.rCustomer;
-            paymentDoc.CardCode = payment.CardCode;
-            paymentDoc.DocDate = payment.CreationTime;
-            paymentDoc.VatDate = payment.CreationTime;
-            paymentDoc.DueDate = payment.CreationTime;
-            paymentDoc.Remarks = payment.Comment;
-            paymentDoc.CounterReference = payment.ReferenceNumber;
-            if(paymentDoc.UserFields.Fields.Count > 0)
-                paymentDoc.UserFields.Fields.Item("U_Cobrador").Value = payment.AbpUser.CollectId;
-
-            if(payment.Type == (int)PaymentType.Efectivo)
+            log.Info($"Begin to create a payment {((SAPPaymentInput)input).Id}");
+            TaskResponse response = new TaskResponse() { Success = true, Message = string.Empty };
+            try
             {
-                paymentDoc.CashAccount = payment.Bank.GeneralAccount;
-                paymentDoc.CashSum = payment.PayedAmount;
-            }
+                var payment = await _paymentService.GetAsync(((SAPPaymentInput)input).Id);
+                var tenant = await _tenantRepository.GetTenantById(payment.TenantId);
 
-            if (payment.Type == (int)PaymentType.Transferencia)
-            {
-                paymentDoc.TransferAccount = payment.Bank.GeneralAccount;
-                paymentDoc.TransferDate = payment.PayedDate;
-                paymentDoc.TransferReference = payment.ReferenceNumber;
-                paymentDoc.TransferSum = payment.PayedAmount;
-            }
+                Company company = this.Connect(new SapSettingsInput { Companydb = tenant.SAPDatabase });
 
-            if(payment.Type == (int)PaymentType.Cheque)
-            {
-                paymentDoc.Checks.CheckAccount = payment.Bank.GeneralAccount;
-                paymentDoc.Checks.CheckSum = payment.PayedAmount;
-                paymentDoc.Checks.DueDate = payment.PayedDate;
-                paymentDoc.Checks.BankCode = payment.Bank.Code;
-                paymentDoc.Checks.Add();
-            }
+                Payments paymentDoc = (Payments)company.GetBusinessObject(BoObjectTypes.oIncomingPayments);
+                paymentDoc.DocObjectCode = BoPaymentsObjectType.bopot_IncomingPayments;
 
-            double amountLeft = payment.PayedAmount;
-
-            if (payment.PaymentInvoiceItems != null)
-            {
-                foreach (var invoice in payment.PaymentInvoiceItems)
+                paymentDoc.DocTypte = BoRcptTypes.rCustomer;
+                paymentDoc.CardCode = payment.CardCode;
+                paymentDoc.DocDate = payment.PayedDate;
+                paymentDoc.VatDate = payment.PayedDate;
+                paymentDoc.DueDate = payment.PayedDate;
+                paymentDoc.Remarks = payment.Comment;
+                paymentDoc.CounterReference = payment.ReferenceNumber;
+                if (paymentDoc.UserFields.Fields.Count > 0)
                 {
-                    if (amountLeft > 0)
+                    paymentDoc.UserFields.Fields.Item("U_Cobrador").Value = "C79";//payment.AbpUser.CollectId;
+                }
+
+                if (payment.Type == (int)PaymentType.Efectivo)
+                {
+                    paymentDoc.CashAccount = payment.Bank.GeneralAccount;
+                    paymentDoc.CashSum = payment.PayedAmount;
+                }
+
+                if (payment.Type == (int)PaymentType.Transferencia)
+                {
+                    paymentDoc.TransferAccount = payment.Bank.GeneralAccount;
+                    paymentDoc.TransferDate = payment.PayedDate;
+                    paymentDoc.TransferReference = payment.ReferenceNumber;
+                    paymentDoc.TransferSum = payment.PayedAmount;
+                }
+
+                if (payment.Type == (int)PaymentType.Cheque)
+                {
+                    paymentDoc.Checks.CheckAccount = payment.Bank.GeneralAccount;
+                    paymentDoc.Checks.CheckSum = payment.PayedAmount;
+                    paymentDoc.Checks.DueDate = payment.PayedDate;
+                    paymentDoc.Checks.BankCode = payment.Bank.Code;
+                    paymentDoc.Checks.Add();
+                }
+
+                if (payment.paymentInvoiceItems != null)
+                {
+                    foreach (var invoice in payment.paymentInvoiceItems)
                     {
                         paymentDoc.Invoices.DocEntry = invoice.DocEntry;
                         paymentDoc.Invoices.InvoiceType = BoRcptInvTypes.it_Invoice;
-                        paymentDoc.Invoices.SumApplied = (invoice.TotalAmount - invoice.PayedAmount) <= amountLeft ? (invoice.TotalAmount - invoice.PayedAmount) : amountLeft;
-                        amountLeft -= paymentDoc.Invoices.SumApplied;
+                        paymentDoc.Invoices.SumApplied = invoice.PayedAmount;
                         paymentDoc.Invoices.Add();
                     }
                 }
-            }
 
-            int errorCode = paymentDoc.Add();
+                string message;
+                if (paymentDoc.Add() == 0)
+                {
+                    string newObjectKey = company.GetNewObjectKey();
+                    message = $"Successfully added Payment. DocEntry: {newObjectKey}";
+                    payment.DocEntry = newObjectKey;
+                    payment.Status = (int)PaymentStatus.CreadoEnSAP;
+                    log.Info(message);
+                }
+                else
+                {
+                    message = $"Error Code: {company.GetLastErrorCode().ToString()} - {company.GetLastErrorDescription()}";
+                    payment.Status = (int)PaymentStatus.Error;
+                    response.Success = false;
+                    log.Error(message);
+                }
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(paymentDoc);
+                paymentDoc = null;
+                company.Disconnect();
 
-            if (errorCode != 0)
-            {
-                var errorMessage = "Error Code: "
-                            + company.GetLastErrorCode().ToString()
-                            + " - "
-                            + company.GetLastErrorDescription();
-
-                payment.LastMessage = errorMessage;
-                // _paymentManager.UpdatePayment(payment);
-                // Logger.Error(errorMessage);
-                response.Message = errorMessage;
-                response.Success = false;
-                throw new Exception(errorMessage);
-            }
-            else
-            {
-                String key = company.GetNewObjectKey();
-                payment.DocEntry = key;
-                payment.Status = String.IsNullOrEmpty(key) ? (int)PaymentStatus.Error : (int)PaymentStatus.Autorizado;
-                var message = String.Format("Successfully Autorized Payment DocEntry: {0}", key);
-                payment.LastMessage = message;
                 response.Message = message;
-                response.Success = false;
-                //Logger.Info(message);
-                //_paymentManager.UpdatePayment(payment);
+                payment.LastMessage = message;
+
+                await _paymentService.UpdateAsync(payment);
             }
-
-            company.Disconnect();
-
+            catch (Exception e)
+            {
+                response.Success = false;
+                response.Message = e.Message;
+                log.Error(e.Message);
+            }
             return response;
         }
     }

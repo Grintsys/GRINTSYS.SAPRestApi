@@ -31,7 +31,7 @@ namespace GRINTSYS.SAPRestApi.Domain.Services
             {
                 var purchaseOrder = await _purchaseOrderService.GetAsync(((SAPOrderInput)input).Id);
                 
-                Company company = this.Connect(new SapSettingsInput { Companydb = "SBO_KGT_PRUEBAS"/*tenant.SAPDatabase*/ });
+                Company company = this.Connect(new SapSettingsInput { Companydb = "SBO_KGT"/*tenant.SAPDatabase*/ });
 
                 IDocuments sapPurchaseOrder = (IDocuments)company.GetBusinessObject(BoObjectTypes.oPurchaseOrders);
                 sapPurchaseOrder.DocType = BoDocumentTypes.dDocument_Items;
